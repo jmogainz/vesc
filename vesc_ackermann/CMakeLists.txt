@@ -20,6 +20,7 @@ ament_auto_find_build_dependencies()
 # nodes library
 ament_auto_add_library(${PROJECT_NAME} SHARED
   src/ackermann_to_vesc.cpp
+  src/twist_to_ackermann.cpp
   src/vesc_to_odom.cpp
 )
 
@@ -31,6 +32,10 @@ rclcpp_components_register_node(${PROJECT_NAME}
 rclcpp_components_register_node(${PROJECT_NAME}
   PLUGIN vesc_ackermann::VescToOdom
   EXECUTABLE vesc_to_odom_node
+)
+rclcpp_components_register_node(${PROJECT_NAME}
+  PLUGIN vesc_ackermann::TwistToAckermann
+  EXECUTABLE twist_to_ackermann_node
 )
 
 #############
