@@ -44,6 +44,12 @@ def generate_launch_description():
 
     ld = LaunchDescription([vesc_la])
 
+    twist_to_ackermann_node = Node(
+        package='vesc_ackermann',
+        executable='twist_to_ackermann_node',
+        name='twist_to_ackermann_node',
+        parameters=[LaunchConfiguration('vesc_config')],
+    )
     ackermann_to_vesc_node = Node(
         package='vesc_ackermann',
         executable='ackermann_to_vesc_node',
@@ -76,6 +82,7 @@ def generate_launch_description():
     # )
 
     # finalize
+    ld.add_action(twist_to_ackermann_node)
     ld.add_action(ackermann_to_vesc_node)
     ld.add_action(vesc_to_odom_node)
     ld.add_action(vesc_driver_node)
