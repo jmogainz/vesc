@@ -56,23 +56,28 @@ VescToOdom::VescToOdom(const rclcpp::NodeOptions & options)
   yaw_(0.0)
 {
   // get ROS parameters
-  odom_frame_ = declare_parameter("odom_frame", odom_frame_);
-  base_frame_ = declare_parameter("base_frame", base_frame_);
-  use_servo_cmd_ = declare_parameter("use_servo_cmd_to_calc_angular_velocity", use_servo_cmd_);
-
-  declare_parameter("speed_to_erpm_gain", speed_to_erpm_gain_);
-  declare_parameter("speed_to_erpm_offset", speed_to_erpm_offset_);
+  this->declare_parameter("odom_frame", odom_frame_);
+  this->declare_parameter("base_frame", base_frame_);
+  this->declare_parameter("use_servo_cmd_to_calc_angular_velocity", use_servo_cmd_);
+  this->declare_parameter("speed_to_erpm_gain", speed_to_erpm_gain_);
+  this->declare_parameter("speed_to_erpm_offset", speed_to_erpm_offset_);
+  this->declare_parameter("publish_tf", publish_tf_);
 
   if (use_servo_cmd_) {
-    declare_parameter("steering_angle_to_servo_gain", steering_to_servo_gain_);
-    declare_parameter("steering_angle_to_servo_offset", steering_to_servo_offset_);
-    declare_parameter("wheelbase", wheelbase_);
+    this->get_parameter("steering_angle_to_servo_gain", steering_to_servo_gain_);
+    this->get_parameter("steering_angle_to_servo_offset", steering_to_servo_offset_);
+    this->get_parameter("wheelbase", wheelbase_);
   }
 
-  publish_tf_ = declare_parameter("publish_tf", publish_tf_);
+  this->get_parameter("odom_frame", odom_frame_);
+  this->get_parameter("base_frame", base_frame_);
+  this->get_parameter("use_servo_cmd_to_calc_angular_velocity", use_servo_cmd_);
+  this->get_parameter("speed_to_erpm_gain", speed_to_erpm_gain_);
+  this->get_parameter("speed_to_erpm_offset", speed_to_erpm_offset_);
+  this->get_parameter("publish_tf", publish_tf_);
 
   // create odom publisher
-  odom_pub_ = create_publisher<Odometry>("odom", 10);
+  odom_pub_ = create_publisher<Odometry>("wheel/odometry", 10);
 
   // create tf broadcaster
   if (publish_tf_) {

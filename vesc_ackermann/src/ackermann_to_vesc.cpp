@@ -48,10 +48,12 @@ AckermannToVesc::AckermannToVesc(const rclcpp::NodeOptions & options)
 : Node("ackermann_to_vesc_node", options)
 {
   // get conversion parameters
-  declare_parameter("speed_to_erpm_gain", speed_to_erpm_gain_);
-  declare_parameter("speed_to_erpm_offset", speed_to_erpm_offset_);
-  declare_parameter("steering_angle_to_servo_gain", steering_to_servo_gain_);
-  declare_parameter("steering_angle_to_servo_offset", steering_to_servo_offset_);
+  this->get_parameter("speed_to_erpm_gain", speed_to_erpm_gain_);
+  this->get_parameter("speed_to_erpm_offset", speed_to_erpm_offset_);
+  this->get_parameter("steering_angle_to_servo_gain", steering_to_servo_gain_);
+  this->get_parameter("steering_angle_to_servo_offset", steering_to_servo_offset_);
+
+  RCLCPP_INFO(this->get_logger(), speed_to_erpm_gain_)
 
   // create publishers to vesc electric-RPM (speed) and servo commands
   erpm_pub_ = create_publisher<Float64>("commands/motor/speed", 10);

@@ -51,17 +51,17 @@ TwistToAckermann::TwistToAckermann(const rclcpp::NodeOptions & options)
 : Node("twist_to_ackermann_node", options)
 {
   // get conversion parameters
-  declare_parameter("twist_cmd_topic", twist_cmd_topic_);
-  declare_parameter("ackermann_cmd_topic", ackermann_cmd_topic_);
-  declare_parameter("wheelbase", wheelbase_);
-  declare_parameter("frame_id", frame_id_);
+  this->get_parameter("twist_cmd_topic", twist_cmd_topic_);
+  this->get_parameter("ackermann_cmd_topic", ackermann_cmd_topic_);
+  this->get_parameter("wheelbase", wheelbase_);
+  this->get_parameter("frame_id", frame_id_);
 
   // create publishers to ackermann_cmd topic
-  ackermann_cmd_pub_ = create_publisher<AckermannDriveStamped>(ackermann_cmd_topic_, 10);
+  ackermann_cmd_pub_ = create_publisher<AckermannDriveStamped>("/ackermann_cmd", 10);
 
   // subscribe to ackermann topic
   twist_cmd_sub_ = create_subscription<Twist>(
-    twist_cmd_topic_, 10, std::bind(&TwistToAckermann::twistCmdCallback, this, _1));
+    "/cmd_vel", 10, std::bind(&TwistToAckermann::twistCmdCallback, this, _1));
 }
 
 double convert_trans_rot_vel_to_steering_angle(
