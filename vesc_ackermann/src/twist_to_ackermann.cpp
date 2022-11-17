@@ -50,6 +50,12 @@ using std_msgs::msg::Float64;
 TwistToAckermann::TwistToAckermann(const rclcpp::NodeOptions & options)
 : Node("twist_to_ackermann_node", options)
 {
+  // declare ROS parameters
+  this->declare_parameter("twist_cmd_topic", twist_cmd_topic_);
+  this->declare_parameter("ackermann_cmd_topic", ackermann_cmd_topic_);
+  this->declare_parameter("wheelbase", wheelbase_);
+  this->declare_parameter("frame_id", frame_id_);
+
   // get conversion parameters
   this->get_parameter("twist_cmd_topic", twist_cmd_topic_);
   this->get_parameter("ackermann_cmd_topic", ackermann_cmd_topic_);
@@ -64,9 +70,12 @@ TwistToAckermann::TwistToAckermann(const rclcpp::NodeOptions & options)
     "/cmd_vel", 10, std::bind(&TwistToAckermann::twistCmdCallback, this, _1));
 }
 
-double convert_trans_rot_vel_to_steering_angle(
+double TwistToAckermann::convert_trans_rot_vel_to_steering_angle(
   double v, double omega, double wheelbase)
 {
+  // log v and omega values
+  RCLCPP_INFO(
+    this->get_logger(), "v: %f, omega: %f, wheelbase: %f", v, omega, wheelbase);
   if (omega == 0 || v == 0) {
     return 0;
   }
@@ -77,6 +86,7 @@ double convert_trans_rot_vel_to_steering_angle(
 
 void TwistToAckermann::twistCmdCallback(const Twist::SharedPtr cmd)
 {
+  RCLCPP_INFO(this->get_logger(), "Received twist command");
   double v = cmd->linear.x;
   double steering = convert_trans_rot_vel_to_steering_angle(v, cmd->angular.z, wheelbase_);
 

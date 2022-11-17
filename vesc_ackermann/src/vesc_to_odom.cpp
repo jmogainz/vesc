@@ -62,6 +62,9 @@ VescToOdom::VescToOdom(const rclcpp::NodeOptions & options)
   this->declare_parameter("speed_to_erpm_gain", speed_to_erpm_gain_);
   this->declare_parameter("speed_to_erpm_offset", speed_to_erpm_offset_);
   this->declare_parameter("publish_tf", publish_tf_);
+  this->declare_parameter("wheelbase", wheelbase_);
+  this->declare_parameter("steering_angle_to_servo_gain", steering_to_servo_gain_);
+  this->declare_parameter("steering_angle_to_servo_offset", steering_to_servo_offset_);
 
   if (use_servo_cmd_) {
     this->get_parameter("steering_angle_to_servo_gain", steering_to_servo_gain_);

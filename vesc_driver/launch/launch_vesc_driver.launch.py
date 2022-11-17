@@ -48,6 +48,7 @@ def generate_launch_description():
         package='vesc_ackermann',
         executable='twist_to_ackermann_node',
         name='twist_to_ackermann_node',
+        parameters=[LaunchConfiguration('vesc_config')]
     )
     ackermann_to_vesc_node = Node(
         package='vesc_ackermann',
