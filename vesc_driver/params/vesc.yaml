@@ -5,8 +5,8 @@
     brake_min: -20000.0
     current_max: 0.0
     current_min: 0.0
-    duty_cycle_max: 0.0
-    duty_cycle_min: 0.0
+    duty_cycle_max: 0.5
+    duty_cycle_min: 0.05
     position_max: 0.0
     position_min: 0.0
     servo_max: 0.85
@@ -14,7 +14,7 @@
     speed_max:  100000.0 #23250.0
     speed_min: -100000.0 #-23250.0
     
-    speed_to_erpm_gain: 16190.0
+    speed_to_erpm_gain: 6848.0
     speed_to_erpm_offset: 0.0
     steering_angle_to_servo_gain: -1.0
     steering_angle_to_servo_offset: 0.5
