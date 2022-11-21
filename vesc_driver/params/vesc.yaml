@@ -1,6 +1,6 @@
 /**:
   ros__parameters:
-    port: "/dev/ttyACM0"
+    port: "/dev/ttyACM2"
     brake_max: 200000.0
     brake_min: -20000.0
     current_max: 0.0
@@ -9,14 +9,14 @@
     duty_cycle_min: 0.05
     position_max: 0.0
     position_min: 0.0
-    servo_max: 0.85
-    servo_min: 0.15
+    servo_max: 0.8
+    servo_min: 0.2
     speed_max:  100000.0 #23250.0
     speed_min: -100000.0 #-23250.0
     
-    speed_to_erpm_gain: 10200.0
+    speed_to_erpm_gain: 2480.0
     speed_to_erpm_offset: 0.0
-    steering_angle_to_servo_gain: -1.0
+    steering_angle_to_servo_gain: -0.895
     steering_angle_to_servo_offset: 0.5
 
 twist_to_ackermann_node:

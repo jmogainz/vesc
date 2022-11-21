@@ -152,6 +152,7 @@ void VescDriver::timerCallback()
     // unknown mode, how did that happen?
     assert(false && "unknown driver mode");
   }
+
 }
 
 void VescDriver::vescPacketCallback(const std::shared_ptr<VescPacket const> & packet)
@@ -330,6 +331,7 @@ void VescDriver::positionCallback(const Float64::SharedPtr position)
  */
 void VescDriver::servoCallback(const Float64::SharedPtr servo)
 {
+  RCLCPP_INFO(get_logger(), "VALID servo command value (%f)", servo->data);
   if (driver_mode_ = MODE_OPERATING) {
     double servo_clipped(servo_limit_.clip(servo->data));
     vesc_.setServo(servo_clipped);
@@ -427,13 +429,13 @@ double VescDriver::CommandLimit::clip(double value)
 
   if (lower && value < lower) {
     RCLCPP_INFO_THROTTLE(
-      logger, clock, 10, "%s command value (%f) below minimum limit (%f), clipping.",
+      logger, clock, 10, "NONVALID %s command value (%f) below minimum limit (%f), clipping.",
       name.c_str(), value, *lower);
     return *lower;
   }
   if (upper && value > upper) {
     RCLCPP_INFO_THROTTLE(
-      logger, clock, 10, "%s command value (%f) above maximum limit (%f), clipping.",
+      logger, clock, 10, "NONVALID %s command value (%f) above maximum limit (%f), clipping.",
       name.c_str(), value, *upper);
     return *upper;
   }
