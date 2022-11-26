@@ -1,6 +1,6 @@
 /**:
   ros__parameters:
-    port: "/dev/ttyACM2"
+    port: "/dev/ttyACM0"
     brake_max: 200000.0
     brake_min: -20000.0
     current_max: 0.0
@@ -36,7 +36,7 @@ vesc_to_odom_node:
     base_frame: base_link
     # publish odom to base link tf
     publish_tf: false
-    use_servo_cmd_to_calc_angular_velocity: true
+    use_servo_cmd_to_calc_angular_velocity: false
     # car wheelbase is about 25cm
     wheelbase: .305
 
